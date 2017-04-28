@@ -1,6 +1,6 @@
 <?php
 
-namespace Enalquiler\Middleware;
+namespace Enalquiler\SymfonyMiddleware;
 
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;

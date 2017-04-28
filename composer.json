@@ -1,8 +1,8 @@
 {
-    "name": "enalquiler/middleware",
+    "name": "enalquiler/symfony-middleware",
     "license": "proprietary",
     "type": "library",
-    "description": "Enalquiler PHP 7.0 middleware",
+    "description": "Enalquiler PHP 7.0 Symfony Middleware",
     "keywords": ["enalquiler Rental Online"],
     "authors": [
         {
@@ -16,9 +16,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Enalquiler\\Middleware": "."
-        },
-        "files": ["functions.php"]
+            "Enalquiler\\SymfonyMiddleware": "."
+        }
     },
     "autoload-dev": {
         "psr-4": {

@@ -1,0 +1,35 @@
+{
+    "name": "enalquiler/middleware",
+    "license": "proprietary",
+    "type": "library",
+    "description": "Enalquiler PHP 7.0 middleware",
+    "keywords": ["enalquiler Rental Online"],
+    "authors": [
+        {
+            "name": "Enalquiler Team",
+            "email": "tecnicos@enalquiler.com"
+        }
+    ],
+    "support": {
+        "email": "tecnicos@enalquiler.com",
+        "source": "https://github.com/enalquiler/middleware"
+    },
+    "autoload": {
+        "psr-0": {
+            "Enalquiler\\Middleware": "."
+        },
+        "files": ["functions.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "test"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "http-interop/http-factory": "^0.3.0",
+        "symfony/psr-http-message-bridge": "^1.0",
+        "http-interop/http-middleware": "^0.4.1",
+        "symfony/http-kernel": "^3.2"
+    }
+}

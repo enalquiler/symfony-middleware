@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Enalquiler\Middleware;
 
+use function GuzzleHttp\Psr7\copy_to_string;
+use GuzzleHttp\Psr7\Response;
+use function GuzzleHttp\Psr7\rewind_body;
+use GuzzleHttp\Psr7\ServerRequest;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,8 +19,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequest;
 use function GuzzleHttp\Psr7\stream_for;
 
 final class SymfonyMiddlewareTest extends TestCase
@@ -64,17 +66,12 @@ final class SymfonyMiddlewareTest extends TestCase
         };
 
         $response = (new SymfonyMiddleware($kernel))->process(
-            (new ServerRequest())
-                ->withUri(
-                    (new ServerRequest())->getUri()->withPath($path)
-                )
-            ,
+            new ServerRequest('GET', $path),
             $delegate
         );
 
-        $body = $response->getBody();
-        $body->rewind();
+        rewind_body($response);
 
-        return $body->getContents();
+        return copy_to_string($response->getBody());
     }
 }

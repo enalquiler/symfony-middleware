@@ -1,17 +1,15 @@
 <?php
 
-namespace Enalquiler\SymfonyMiddleware;
+namespace Enalquiler\Middleware;
 
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use Interop\Http\ServerMiddleware\MiddlewareInterface;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 final class SymfonyMiddleware implements MiddlewareInterface
@@ -29,19 +27,18 @@ final class SymfonyMiddleware implements MiddlewareInterface
     /**
      * SymfonyMiddleware constructor.
      *
-     * @param HttpKernelInterface $app
-     * @param Kernel              $symfonyApp
+     * @param Kernel              $app
      */
-    public function __construct(Kernel $symfonyApp)
+    public function __construct(Kernel $app)
     {
-        $this->symfonyApp = $symfonyApp;
+        $this->symfonyApp = $app;
     }
 
     /**
      * Process an incoming client or server request and return a response,
      * optionally delegating to the next middleware component to create the response.
      *
-     * @param RequestInterface $request
+     * @param ServerRequestInterface $request
      * @param DelegateInterface $delegate
      *
      * @return ResponseInterface

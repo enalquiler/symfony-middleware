@@ -1,9 +1,9 @@
 {
     "name": "enalquiler/symfony-middleware",
-    "license": "proprietary",
+    "license": "MIT",
     "type": "library",
-    "description": "Enalquiler PHP 7.0 Symfony Middleware",
-    "keywords": ["enalquiler Rental Online"],
+    "description": "Symfony Middleware based on PSR-15",
+    "keywords": ["symfony", "middleware", "psr", "psr7", "psr15"],
     "authors": [
         {
             "name": "Enalquiler Team",
@@ -12,11 +12,12 @@
     ],
     "support": {
         "email": "tecnicos@enalquiler.com",
-        "source": "https://github.com/enalquiler/middleware"
+        "source": "https://github.com/enalquiler/symfony-middleware",
+        "issues": "https://github.com/enalquiler/symfony-middleware/issues"
     },
     "autoload": {
-        "psr-0": {
-            "Enalquiler\\SymfonyMiddleware": "."
+        "psr-4": {
+            "Enalquiler\\Middleware\\": "src"
         }
     },
     "autoload-dev": {
@@ -25,10 +26,14 @@
         }
     },
     "require": {
-        "php": ">=7.0",
-        "http-interop/http-factory": "^0.3.0",
         "symfony/psr-http-message-bridge": "^1.0",
         "http-interop/http-middleware": "^0.4.1",
-        "symfony/http-kernel": "^3.2"
+        "symfony/http-kernel": "^3.3",
+        "zendframework/zend-diactoros": "^1.5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.3",
+        "symfony/symfony": "^3.3",
+        "guzzlehttp/psr7": "^1.4"
     }
 }

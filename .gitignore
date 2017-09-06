@@ -1,1 +1,4 @@
 /vendor
+/composer.lock
+/tests/Enalquiler/Middleware/cache
+/tests/Enalquiler/Middleware/logs

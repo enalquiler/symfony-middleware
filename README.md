@@ -10,7 +10,9 @@ composer require enalquiler/symfony-middleware
 
 ## Usage
 
-### With [https://zendframework.github.io/zend-stratigility/middleware/](Zend Stratigility)
+### With [Zend Stratigility](https://zendframework.github.io/zend-stratigility/middleware/)
+
+Zend Stratigility 
 
 ```php
 <?php
@@ -41,7 +43,7 @@ $app
 $server->listen(new NoopFinalHandler());
 ```
 
-### With [https://github.com/mindplay-dk/middleman](Middleman)
+### With [Middleman](https://github.com/mindplay-dk/middleman)
 
 ```php
 <?php

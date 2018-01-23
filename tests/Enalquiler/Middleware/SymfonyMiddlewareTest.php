@@ -10,7 +10,9 @@ use function GuzzleHttp\Psr7\rewind_body;
 use GuzzleHttp\Psr7\ServerRequest;
 use Interop\Http\ServerMiddleware\DelegateInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -59,8 +61,8 @@ final class SymfonyMiddlewareTest extends TestCase
             public function fooAction() { return new SymfonyResponse('Response from Symfony!'); }
         };
 
-        $delegate = new class implements DelegateInterface {
-            public function process(ServerRequestInterface $request) {
+        $delegate = new class implements RequestHandlerInterface {
+            public function handle(ServerRequestInterface $request): ResponseInterface {
                 return (new Response())->withBody(stream_for('Response from delegate'));
             }
         };

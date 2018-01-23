@@ -2,10 +2,10 @@
 
 namespace Enalquiler\Middleware;
 
-use Interop\Http\ServerMiddleware\DelegateInterface;
-use Interop\Http\ServerMiddleware\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Bridge\PsrHttpMessage\Factory\DiactorosFactory;
 use Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
@@ -24,26 +24,12 @@ final class SymfonyMiddleware implements MiddlewareInterface
      */
     private $booted = false;
 
-    /**
-     * SymfonyMiddleware constructor.
-     *
-     * @param Kernel              $app
-     */
     public function __construct(Kernel $app)
     {
         $this->symfonyApp = $app;
     }
 
-    /**
-     * Process an incoming client or server request and return a response,
-     * optionally delegating to the next middleware component to create the response.
-     *
-     * @param ServerRequestInterface $request
-     * @param DelegateInterface $delegate
-     *
-     * @return ResponseInterface
-     */
-    public function process(ServerRequestInterface $request, DelegateInterface $delegate)
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $httpFoundationFactory = new HttpFoundationFactory();
         $psr7Factory = new DiactorosFactory();
@@ -54,11 +40,11 @@ final class SymfonyMiddleware implements MiddlewareInterface
             $dispatcher = $this->symfonyApp->getContainer()->get('event_dispatcher');
             $dispatcher->addListener(
                 'kernel.exception',
-                function (GetResponseForExceptionEvent $event) use ($request, $delegate, $httpFoundationFactory) {
+                function (GetResponseForExceptionEvent $event) use ($request, $handler, $httpFoundationFactory) {
                     if ($event->getException() instanceof NotFoundHttpException) {
-                        $psr7Response = $delegate->process($request);
+                        $psr7Response = $handler->handle($request);
                         $response = $httpFoundationFactory->createResponse($psr7Response);
-                        $response->headers->set('X-Status-Code', $response->getStatusCode());
+                        $event->allowCustomResponseCode();
                         $event->setResponse($response);
                     }
                 }
